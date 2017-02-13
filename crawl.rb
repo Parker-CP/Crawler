@@ -1,7 +1,19 @@
 require_relative 'lib/crawler'
 
-crawler = Crawler.new("http://wiprodigital.com")
-# crawler = Crawler.new("http://race-condition.org")
-crawler.get_links
+url = "race-condition.org"
 
-puts crawler.links.length
+crawler = Crawler.new(url)
+crawler.get_links
+title = crawler.domain.gsub("http://www.", "")
+found_domains = crawler.links.sort
+sub_domains = found_domains.find_all {|target_domain| target_domain.include?(title)}
+external_domains = found_domains.find_all {|target_domain| !target_domain.include?(title)}
+
+File.open("./scraped/#{title}.md", "w+") do |file|
+  file.puts(found_domains)
+end
+
+puts "total found: #{found_domains.length}"
+puts "sub domains found: #{sub_domains.length}"
+puts "external domains found: #{external_domains.length}"
+puts "Generated #{crawler.links.length} links at /scraped/#{title}.txt"

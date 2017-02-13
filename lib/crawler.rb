@@ -12,6 +12,7 @@ class Crawler
 
   def get_links(crawlable = [@domain])
     if crawlable.length > 0
+      puts "crawlable domains remaining: #{crawlable.length}"
       page = visit_new_page(crawlable.pop)
       find_links(page, crawlable)
       get_links(crawlable)
@@ -22,7 +23,7 @@ class Crawler
 
   def find_links(page, crawlable)
     page.search('a').map do |link|
-      link = link['href'].rstrip
+      link = link['href'].strip
       add_link(crawlable, link)
     end
   end
@@ -64,5 +65,4 @@ class Crawler
     end
     domain
   end
-
 end
