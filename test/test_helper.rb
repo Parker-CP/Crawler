@@ -5,4 +5,3 @@ end
 require 'minitest/autorun'
 require 'minitest/pride'
 require './lib/crawler'
-require './lib/runner'
