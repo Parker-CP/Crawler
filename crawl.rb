@@ -1,4 +1,5 @@
 require_relative 'lib/crawler'
-page = Crawler.new("http://wiprodigital.com/")
+crawler = Crawler.new("http://wiprodigital.com/")
+crawler.get_links
 
-puts page.links.length
+puts crawler.links.length
