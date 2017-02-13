@@ -14,8 +14,8 @@ class CrawlerTest < Minitest::Test
     assert_equal Nokogiri::XML::NodeSet, @crawler.page.css('body').class
   end
 
-  def test_crawler_can_get_home_page_links
+  def test_crawler_can_get_all_page_links
     @crawler.get_links
-    assert_equal 55, @crawler.links.length
+    assert_equal 334, @crawler.links.length
   end
 end
