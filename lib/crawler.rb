@@ -6,9 +6,9 @@ class Crawler
               :page,
               :links
 
-  def initialize(url)
+  def initialize(domain)
     @links = []
-    @url = url
+    @domain = domain
   end
 
   def get_links
