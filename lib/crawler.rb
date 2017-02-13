@@ -3,11 +3,12 @@ require 'nokogiri'
 require 'pry'
 
 class Crawler
-  attr_reader :links
+  attr_reader :links,
+              :domain
 
   def initialize(domain)
     @links = []
-    @domain = domain
+    @domain = format_domain(domain)
   end
 
   def get_links(crawlable = [@domain])
@@ -17,7 +18,7 @@ class Crawler
         link = link['href'].rstrip
         if link.include?('/') && !@links.include?(link)
           @links << link
-          if link.include?(@domain) || !link.include?('http')
+          if link.include?(@domain.gsub("www.", "")) || link.include?(@domain) || !link.include?('http')
             crawlable << link
           end
         end
@@ -26,11 +27,27 @@ class Crawler
     end
   end
 
+  private
+
   def visit_new_page(next_page)
-    if next_page.include?(@domain)
+    if next_page.include?(@domain.gsub("www.", "")) || next_page.include?(@domain)
       page = Nokogiri::HTML(open(next_page))
     else
       page = Nokogiri::HTML(open(@domain + next_page))
     end
   end
+
+  def format_domain(domain)
+    if domain.include?("http://") && domain.include?("www.")
+      domain
+    elsif domain.include?("http://")
+      domain = domain.insert(7, "www.")
+    elsif domain.include?("www.")
+      domain = "http://" + domain
+    else
+      domain = "http://www." + domain
+    end
+    domain
+  end
+
 end
