@@ -17,8 +17,12 @@ class Crawler
         link = link['href'].rstrip
         if link.include?('/') && !@links.include?(link)
           @links << link
+          if link.include?(@domain)
+            crawlable << link
+          end
         end
       end
+      get_links(crawlable)
     end
   end
 end
