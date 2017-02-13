@@ -1,7 +1,7 @@
 require_relative 'lib/crawler'
 
 # This url determines which website you will be scraping
-url = "http://wiprodigital.coom"
+url = "http://wiprodigital.com"
 
 # If you encounter a bad URI error please check the spelling of the website
 
