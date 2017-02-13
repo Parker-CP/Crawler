@@ -8,9 +8,7 @@ class Crawler
 
   def initialize(url)
     @links = []
-    @visited = []
     @url = url
-    @page = Nokogiri::HTML(open(url))
   end
 
   def get_links
