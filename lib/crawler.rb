@@ -25,9 +25,9 @@ class Crawler
 
 
   def get_links
-    # parse through all anchor tags
-    # find the href of the anchor tag and put it in the link array
-    # remove duplicates
+    @links = page.search('a').map do |link|
+      link['href']
+    end.uniq
   end
 
 end
