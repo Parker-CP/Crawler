@@ -12,12 +12,17 @@ class Crawler
 
   def get_links(crawlable = [@domain])
     if crawlable.length > 0
-      page = Nokogiri::HTML(open(crawlable.pop))
+      next_page = crawlable.pop
+      if next_page.include?(@domain)
+        page = Nokogiri::HTML(open(next_page))
+      else
+        page = Nokogiri::HTML(open(@domain + next_page))
+      end
       page.search('a').map do |link|
         link = link['href'].rstrip
         if link.include?('/') && !@links.include?(link)
           @links << link
-          if link.include?(@domain)
+          if link.include?(@domain) || !link.include?('http')
             crawlable << link
           end
         end
