@@ -28,12 +28,20 @@ class Crawler
   end
 
   def add_link(crawlable, link)
-    if link.include?('/') && !@links.include?(link)
+    if valid_link(link)
       @links << link
-      if link.include?(@domain.gsub("www.", "")) || link.include?(@domain) || !link.include?('http')
+      if sub_domain(link)
         crawlable << link
       end
     end
+  end
+
+  def valid_link(link)
+    link.include?('/') && !@links.include?(link)
+  end
+
+  def sub_domain(link)
+    link.include?(@domain) || link.include?(@domain.gsub("www.", "")) || !link.include?("http")
   end
 
   def visit_new_page(next_page)
