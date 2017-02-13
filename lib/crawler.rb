@@ -23,11 +23,15 @@ class Crawler
   def find_links(page, crawlable)
     page.search('a').map do |link|
       link = link['href'].rstrip
-      if link.include?('/') && !@links.include?(link)
-        @links << link
-        if link.include?(@domain.gsub("www.", "")) || link.include?(@domain) || !link.include?('http')
-          crawlable << link
-        end
+      add_link(crawlable, link)
+    end
+  end
+
+  def add_link(crawlable, link)
+    if link.include?('/') && !@links.include?(link)
+      @links << link
+      if link.include?(@domain.gsub("www.", "")) || link.include?(@domain) || !link.include?('http')
+        crawlable << link
       end
     end
   end
