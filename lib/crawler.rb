@@ -2,9 +2,7 @@ require 'open-uri'
 require 'nokogiri'
 
 class Crawler
-  attr_reader :url,
-              :page,
-              :links
+  attr_reader :links
 
   def initialize(domain)
     @links = []
