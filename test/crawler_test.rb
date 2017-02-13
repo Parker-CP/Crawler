@@ -8,6 +8,6 @@ class CrawlerTest < Minitest::Test
 
   def test_crawler_can_get_home_page_links
     @crawler.get_links
-    assert_equal 49, @crawler.links.length
+    assert_equal 334, @crawler.links.length
   end
 end
