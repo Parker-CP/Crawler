@@ -3,13 +3,14 @@ require_relative 'test_helper'
 class CrawlerTest < Minitest::Test
 
   def setup
-    @crawler = Crawler.new("http://copper-falls-market.herokuapp.com")
+    @crawler = Crawler.new("http://race-condition.org")
   end
 
-  # def test_crawler_can_get_home_page_links
-  #   @crawler.get_links
-  #   assert_equal 176, @crawler.links.length
-  # end
+  def test_crawler_can_get_home_page_links
+    @crawler.get_links
+    puts @crawler.links
+    assert_equal 5, @crawler.links.length
+  end
 
   def test_domain_with_http_and_www_is_saved
     new_crawler = Crawler.new("http://www.domain.com")
