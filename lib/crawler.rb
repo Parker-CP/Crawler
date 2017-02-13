@@ -13,20 +13,24 @@ class Crawler
   def get_links(crawlable = [@domain])
     if crawlable.length > 0
       page = visit_new_page(crawlable.pop)
-      page.search('a').map do |link|
-        link = link['href'].rstrip
-        if link.include?('/') && !@links.include?(link)
-          @links << link
-          if link.include?(@domain.gsub("www.", "")) || link.include?(@domain) || !link.include?('http')
-            crawlable << link
-          end
-        end
-      end
+      find_links(page, crawlable)
       get_links(crawlable)
     end
   end
 
   private
+
+  def find_links(page, crawlable)
+    page.search('a').map do |link|
+      link = link['href'].rstrip
+      if link.include?('/') && !@links.include?(link)
+        @links << link
+        if link.include?(@domain.gsub("www.", "")) || link.include?(@domain) || !link.include?('http')
+          crawlable << link
+        end
+      end
+    end
+  end
 
   def visit_new_page(next_page)
     if next_page.include?(@domain.gsub("www.", "")) || next_page.include?(@domain)
